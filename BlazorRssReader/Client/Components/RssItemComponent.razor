@@ -1,0 +1,22 @@
+﻿<div class="rssitem">
+    <div class="d-flex flex-nowrap rssitem-head">
+        <div class="d-inline-block rssitem-head-data">
+            @Item.Date.ToString("dd.MM.yy HH:mm")
+        </div>
+        <div class="d-inline-block flex-grow-1 text-left text-wrap rssitem-head-title">
+            <a href="@Item.Url">@Item.Title</a>
+        </div>
+        <div class="d-inline-block rssitem-head-more">
+            <Button Clicked="ToggleDescription">@ToggleDescriptionText</Button>
+        </div>
+    </div>
+    <Accordion>
+        <Collapse Visible="!this.Collapsed" Class="rssitem-description">
+            <CollapseBody >
+                <div>
+                    @((MarkupString)Item.Description)
+                </div>
+            </CollapseBody>
+        </Collapse>
+    </Accordion>
+</div>

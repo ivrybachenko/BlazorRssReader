@@ -1,0 +1,23 @@
+﻿@page "/"
+
+@using Blazorise.Sidebar
+
+<Layout Sider="true">
+    <LayoutSider>
+        <LayoutSiderContent>
+            <Sidebar Data="@sidebarInfo" @ref="sidebar" />
+        </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+        <LayoutHeader Fixed="true">
+            <HeaderComponent Title="@feed.Title"
+                             SidebarToggleClicked="ToggleSidebar"
+                             SettingsClicked="ShowSettingsModal"
+                             SyncClicked="SyncFeed"/>
+        </LayoutHeader>
+        <LayoutContent Class="container">
+            <RssFeedComponent Items="@items"/>
+            <SettingsModal @ref="settingsModalRef" />
+        </LayoutContent>
+    </Layout>
+</Layout>

@@ -1,0 +1,15 @@
+﻿<Modal @ref="modalRef">
+    <ModalBackdrop />
+    <ModalContent Centered="true" Size="ModalSize.ExtraLarge">
+        <ModalHeader>
+            <ModalTitle Class="w-100 text-center">Настройки</ModalTitle>
+            <CloseButton Clicked="@HideModal" />
+        </ModalHeader>
+        <ModalBody>
+            <BlazorRssReader.Client.Pages.Settings />
+        </ModalBody>
+        <ModalFooter Class="text-center">
+            <Button Color="Color.Primary" Clicked="@HideModal">Сохранить</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

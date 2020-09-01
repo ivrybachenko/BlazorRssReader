@@ -1,0 +1,16 @@
+﻿@if (Items == null || Items.Count() == 0)
+{
+    <div class="h-100 w-100 content-center">
+        <Icon Name="IconName.ExclamationTriangle" />
+        <p>Нечего отображать</p>
+    </div>
+}
+else
+{
+    <div>
+        @foreach(var item in Items)
+        {
+            <RssItemComponent Item="item" />
+        }
+    </div>
+}
