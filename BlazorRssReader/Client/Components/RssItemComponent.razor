@@ -1,6 +1,6 @@
 ﻿<div class="rssitem">
     <div class="d-flex flex-nowrap rssitem-head">
-        <div class="d-inline-block rssitem-head-data">
+        <div class="d-inline-block text-nowrap pr-0">
             @Item.Date.ToString("dd.MM.yy HH:mm")
         </div>
         <div class="d-inline-block flex-grow-1 text-left text-wrap rssitem-head-title">
@@ -11,11 +11,20 @@
         </div>
     </div>
     <Accordion>
-        <Collapse Visible="!this.Collapsed" Class="rssitem-description">
-            <CollapseBody >
-                <div>
-                    @((MarkupString)Item.Description)
-                </div>
+        <Collapse Visible="!_Collapsed" Class="rssitem-description">
+            <CollapseBody>
+                @if (_Configuration.FormatDescription)
+                {
+                    <div>
+                        @((MarkupString)Item.Description)
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        @Item.Description
+                    </div>
+                }
             </CollapseBody>
         </Collapse>
     </Accordion>

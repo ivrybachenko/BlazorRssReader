@@ -1,14 +1,21 @@
-﻿@if (Items == null || Items.Count() == 0)
+﻿@if (Items == null)
 {
     <div class="h-100 w-100 content-center">
-        <Icon Name="IconName.ExclamationTriangle" />
-        <p>Нечего отображать</p>
+        <Icon Name="IconName.ExclamationTriangle" Class="error-icon" />
+        <p>Ошибка при загрузке данных</p>
+    </div>
+}
+else if (Items.Count() == 0)
+{
+    <div class="h-100 w-100 content-center">
+        <Icon Name="IconName.ExclamationTriangle" Class="error-icon" />
+        <p>Нет данных для отображения</p>
     </div>
 }
 else
 {
-    <div>
-        @foreach(var item in Items)
+    <div class="pb-30vh">
+        @foreach (var item in Items)
         {
             <RssItemComponent Item="item" />
         }

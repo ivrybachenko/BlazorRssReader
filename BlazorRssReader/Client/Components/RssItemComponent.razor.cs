@@ -1,4 +1,5 @@
-﻿using BlazorRssReader.Shared.Models;
+﻿using BlazorRssReader.Client.Services;
+using BlazorRssReader.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,19 +10,27 @@ namespace BlazorRssReader.Client.Components
 {
     public partial class RssItemComponent
     {
-        [Parameter]
-        public RssItem? Item { get; set; }
-        private bool Collapsed { get; set; } = true;
+        [Inject] private IConfiguration _Configuration { get; set; }
+        [Parameter] public RssItem? Item { get; set; }
+        private bool _Collapsed { get; set; } = true;
+        protected override void OnInitialized()
+        {
+            _Configuration.FormatDescriptionChanged += OnFormatDescriptionChanged;
+        }
+        private void OnFormatDescriptionChanged(bool format)
+        {
+            StateHasChanged();
+        }
         private String ToggleDescriptionText
         {
             get
             {
-                return Collapsed ? "Развернуть" : "Свернуть";
+                return _Collapsed ? "Развернуть" : "Свернуть";
             }
         }
         private void ToggleDescription()
         {
-            this.Collapsed = !Collapsed;
+            _Collapsed = !_Collapsed;
         }
     }
 }

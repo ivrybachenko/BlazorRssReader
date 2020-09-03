@@ -8,6 +8,6 @@ namespace BlazorRssReader.Server.Services
 {
     public interface IRssLoader
     {
-        Task<IEnumerable<RssItem>> Download(string url);
+        Task<IEnumerable<RssItem>?> Download(string url);
     }
 }

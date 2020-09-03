@@ -1,15 +1,38 @@
-﻿<Modal @ref="modalRef">
+﻿<Modal @ref="_ModalRef">
     <ModalBackdrop />
-    <ModalContent Centered="true" Size="ModalSize.ExtraLarge">
+    <ModalContent Centered="true" Size="ModalSize.Large">
         <ModalHeader>
             <ModalTitle Class="w-100 text-center">Настройки</ModalTitle>
             <CloseButton Clicked="@HideModal" />
         </ModalHeader>
-        <ModalBody>
-            <BlazorRssReader.Client.Pages.Settings />
+        <ModalBody Class="px-5">
+            <FieldLabel Class="text-center">Период обновления RSS-ленты</FieldLabel>
+            <Fields>
+                <Field>
+                    <FieldBody>
+                        <TextEdit @bind-Text="_SyncPeriodHours" />
+                    </FieldBody>
+                    <FieldLabel>часов</FieldLabel>
+                </Field>
+                <Field>
+                    <FieldBody>
+                        <TextEdit @bind-Text="_SyncPeriodMinutes" />
+                    </FieldBody>
+                    <FieldLabel>минут</FieldLabel>
+                </Field>
+                <Field>
+                    <FieldBody>
+                        <TextEdit @bind-Text="_SyncPeriodSeconds" />
+                    </FieldBody>
+                    <FieldLabel>секунд</FieldLabel>
+                </Field>
+            </Fields>
+            <Field>
+                <Check TValue="bool" @bind-Checked="_FormatDescription">Форматировать описание cтатьи</Check>
+            </Field>
         </ModalBody>
-        <ModalFooter Class="text-center">
-            <Button Color="Color.Primary" Clicked="@HideModal">Сохранить</Button>
+        <ModalFooter Class="justify-content-center">
+            <Button Color="Color.Primary" Clicked="@OnSubmit">Сохранить</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>

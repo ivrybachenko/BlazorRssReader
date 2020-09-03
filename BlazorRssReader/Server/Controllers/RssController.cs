@@ -14,20 +14,17 @@ namespace BlazorRssReader.Server.Controllers
     [ApiController]
     public class RssController : ControllerBase
     {
+        private readonly IRssLoader _RssLoader;
 
-        private readonly ILogger<RssController> logger;
-        private readonly IRssLoader rssLoader;
-
-        public RssController(ILogger<RssController> logger, IRssLoader rssLoader)
+        public RssController(IRssLoader rssLoader)
         {
-            this.logger = logger;
-            this.rssLoader = rssLoader;
+            _RssLoader = rssLoader;
         }
         [Route("{url}")]
         [HttpGet]
         public async Task<IEnumerable<RssItem>> Get(String url)
         {
-            return await rssLoader.Download(System.Net.WebUtility.UrlDecode(url));
+            return await _RssLoader.Download(System.Net.WebUtility.UrlDecode(url));
         }
     }
 }

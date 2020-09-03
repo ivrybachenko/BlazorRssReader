@@ -9,18 +9,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlazorRssReader.Client.Components;
 using Microsoft.AspNetCore.Components;
+using System.Threading;
 
 namespace BlazorRssReader.Client.Pages
 {
     public partial class Index
     {
-        private Sidebar sidebar;
-        private SettingsModal settingsModalRef;
-        private RssFeed feed = new RssFeed("Хабр. Интересное", "https://habr.com/ru/rss/interesting/");
-        private IEnumerable<RssItem>? items = null;
-        [Inject]
-        private IRssLoader rssLoader { get; set; }
-        private SidebarInfo sidebarInfo = new SidebarInfo
+        [Inject] private IRssService _RssService { get; set; }
+        [Inject] private IConfiguration _Configuration { get; set; }
+        private Sidebar _Sidebar;
+        private SettingsModal _SettingsModalRef;
+        private RssFeed _Feed = new RssFeed("Хабр. Интересное", "https://habr.com/ru/rss/interesting/");
+        private IEnumerable<RssItem>? _Items = Enumerable.Empty<RssItem>();
+        private bool _IsLoadingInProgress = false;
+        private Timer? _SyncTimer = null;
+        private SidebarInfo _SidebarInfo = new SidebarInfo
         {
             Brand = new SidebarBrandInfo
             {
@@ -32,18 +35,36 @@ namespace BlazorRssReader.Client.Pages
                 new SidebarItemInfo { To = "", Text = "РИА Новости" },
             }
         };
-        void ToggleSidebar()
+        protected override void OnInitialized()
         {
-            sidebar.Toggle();
+            _Configuration.SyncPeriodChanged += StartSyncInterval;
+            StartSyncInterval(_Configuration.SyncPeriod);
+        }
+        private void ToggleSidebar()
+        {
+            _Sidebar.Toggle();
         }
 
         private void ShowSettingsModal()
         {
-            settingsModalRef.Show();
+            _SettingsModalRef.Show();
         }
-        public async void SyncFeed()
+        private async Task SyncFeed()
         {
-            this.items = await rssLoader.Download(feed.Url);
+            _IsLoadingInProgress = true;
+            StateHasChanged();
+            _Items = await _RssService.Download(_Feed.Url);
+            _IsLoadingInProgress = false;
+            StateHasChanged();
+        }
+        private void StartSyncInterval(Int32 syncPeriodInSeconds)
+        {
+            if (_SyncTimer != null)
+            {
+                _SyncTimer.Dispose();
+                _SyncTimer = null;
+            }
+            _SyncTimer = new Timer(async s => await SyncFeed(), null, 0, syncPeriodInSeconds * 1000);
         }
     }
 }

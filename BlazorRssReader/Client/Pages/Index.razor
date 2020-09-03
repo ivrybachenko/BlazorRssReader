@@ -5,19 +5,20 @@
 <Layout Sider="true">
     <LayoutSider>
         <LayoutSiderContent>
-            <Sidebar Data="@sidebarInfo" @ref="sidebar" />
+            <Sidebar Data="@_SidebarInfo" @ref="_Sidebar" />
         </LayoutSiderContent>
     </LayoutSider>
     <Layout>
         <LayoutHeader Fixed="true">
-            <HeaderComponent Title="@feed.Title"
+            <HeaderComponent Title="@_Feed.Title"
+                             IsLoadingInProgress="_IsLoadingInProgress"
                              SidebarToggleClicked="ToggleSidebar"
                              SettingsClicked="ShowSettingsModal"
-                             SyncClicked="SyncFeed"/>
+                             SyncClicked="async () => await SyncFeed()"/>
         </LayoutHeader>
         <LayoutContent Class="container">
-            <RssFeedComponent Items="@items"/>
-            <SettingsModal @ref="settingsModalRef" />
+            <RssFeedComponent Items="@_Items"/>
+            <SettingsModal @ref="_SettingsModalRef" />
         </LayoutContent>
     </Layout>
 </Layout>

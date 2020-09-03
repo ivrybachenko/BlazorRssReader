@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlazorRssReader.Client.Services
 {
-    public interface IRssLoader
+    public interface IRssService
     {
-        Task<IEnumerable<RssItem>> Download(string url);
+        Task<IEnumerable<RssItem>?> Download(string url);
     }
 }

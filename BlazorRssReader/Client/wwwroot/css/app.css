@@ -1,4 +1,11 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿.error-icon {
+    font-size: 5rem;
+    color: #ababab;
+}
+
+.pb-30vh{
+    padding-bottom: 30vh;
+}
 
 div.content-center {
     display: flex;
@@ -31,9 +38,6 @@ div.loading-page {
 }
     .rssitem-head > div {
         padding: .75rem 1.5rem;
-    }
-    .rssitem-head .rssitem-head-data {
-        padding-right: 0;
     }
     .rssitem-head .rssitem-head-more {
         padding: .375rem .75rem;

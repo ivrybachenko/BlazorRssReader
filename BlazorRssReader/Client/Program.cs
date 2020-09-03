@@ -28,7 +28,8 @@ namespace BlazorRssReader.Client
               .AddBootstrapProviders()
               .AddFontAwesomeIcons();
 
-            builder.Services.AddSingleton<IRssLoader, RssLoader>();
+            builder.Services.AddSingleton<IRssService, RssService>();
+            builder.Services.AddSingleton<Services.IConfiguration, Configuration>();
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

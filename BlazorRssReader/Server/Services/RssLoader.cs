@@ -11,12 +11,12 @@ namespace BlazorRssReader.Server.Services
 {
     class RssLoader : IRssLoader
     {
-        private HttpClient httpClient;
+        private HttpClient _HttpClient;
         public RssLoader(IHttpClientFactory clientFactory)
         {
-            this.httpClient = clientFactory.CreateClient();
+            _HttpClient = clientFactory.CreateClient();
         }
-        public async Task<IEnumerable<RssItem>> Download(string url)
+        public async Task<IEnumerable<RssItem>?> Download(string url)
         {
             try
             {
@@ -25,14 +25,14 @@ namespace BlazorRssReader.Server.Services
                 SyndicationFeed Channel = SyndicationFeed.Load(FeedReader);
                 FeedReader.Close();
 
-               var items = Channel.Items.Select(item =>
-                    new RssItem(item.Title.Text, item.PublishDate.DateTime,
-                    item.Summary.Text, item.Id));
+                var items = Channel.Items
+                    .Select(item => new RssItem(item.Title.Text, item.PublishDate.DateTime,
+                        item.Summary.Text, item.Id))
+                    .OrderByDescending(s => s.Date);
                 
                 return items;
-
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
